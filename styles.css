@@ -24,7 +24,27 @@ body {
   border: 1px solid black;
 }
 #display {
+  display: flex;
+  flex-direction: column;
   grid-area: display;
+}
+#input {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 50%;
+  width: 100%;
+  background-color: blue;
+  font-size: 20px;
+}
+#output {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  height: 50%;
+  width: 100%;
+  background-color: red;
+  font-size: 30px;
 }
 #clear {
   grid-area: clear;
