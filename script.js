@@ -32,9 +32,26 @@ function clearDisplay() {
 clear.addEventListener('click', clearDisplay);
 
 function inputNumber() {
-  //THE LOGIC FOR THIS FUNCTION LOOKS FUNKY. I THINK I CAN CLEAN IT UP. IT ALSO MAY BE A GOOD IDEA TO SEPERATE THE ZERO BUTTONS LOGIC FROM THE 1-9 LOGIC.
-
-  if(/\./.test(output.textContent) && this.textContent == '.') {
+  //THE LOGIC FOR THIS FUNCTION LOOKS FUNKY. I THINK I CAN CLEAN IT UP. IT ALSO MAY BE A GOOD IDEA TO SEPERATE THE ZERO BUTTON'S LOGIC FROM THE 1-9 LOGIC.
+  if (output.textContent.length > 20) { //working at 8
+    console.log('a');
+    console.log(output.textContent);
+    console.log(output.textContent.length);
+    output.textContent = 'DIGIT LIMIT MET';
+  }
+  else if (input.textContent.length > 29) { //working at 17
+    console.log('b');
+    output.textContent = 'SCREEN LIMIT MET';
+  }
+  else if (output.textContent == 'DIGIT LIMIT MET') {
+    console.log('c');
+  }
+  else if (/\=/.test(input.textContent)) {
+    console.log('-1');
+    input.textContent = this.textContent;
+    output.textContent = this.textContent;
+  }
+  else if(/\./.test(output.textContent) && this.textContent == '.') {
     console.log('0');
   }
   else if (/(?<![0-9])0$/.test(input.textContent) == true && this.textContent == '.' && output.textContent == '0') {
@@ -111,10 +128,26 @@ nine.addEventListener('click', inputNumber);
 decimal.addEventListener('click', inputNumber);
 
 function inputOperator() {
-  if (/\=/.test(input.textContent)) {
+  if (/\=/.test(input.textContent) && !/[0-9]$/.test(input.textContent)) {
+    console.log('-4');
+    input.textContent = input.textContent.slice(1, -1);
+    input.textContent += this.textContent;
+    output.textContent = this.textContent;
+  }
+  else if (/\=/.test(input.textContent) && /T/.test(output.textContent)) {
+    console.log('-3')
+    input.textContent = input.textContent.slice(1);
+    input.textContent += this.textContent;
+    output.textContent = this.textContent;
+  }
+  else if (/\=/.test(input.textContent)) {
+    console.log('-2');
     input.textContent = output.textContent;
     input.textContent += this.textContent;
     output.textContent = this.textContent;
+  }
+  else if (input.textContent == '-') {
+    console.log('-1');
   }
   else if (/(?<![0-9])-$/.test(input.textContent)) {
     console.log('0');
@@ -138,7 +171,7 @@ function inputOperator() {
     console.log('3');
   }
   else {
-    console.log('4');
+    console.log('5');
     input.textContent += this.textContent;
     output.textContent = this.textContent;
   }
@@ -146,34 +179,44 @@ function inputOperator() {
 
 function inputMinus() {
   //IT MAY BE BETTER TO INCORPORATE THIS LOGIC INTO THE INPUTOPERATOR FUNCTION.
-  if (/\=/.test(input.textContent)) {
+  if (/\=/.test(input.textContent) && /T/.test(output.textContent)) {
+    console.log('minus-a')
+    input.textContent = input.textContent.slice(1);
+    input.textContent += this.textContent;
+    output.textContent = this.textContent;
+  }
+  else if (/\=/.test(input.textContent) && /\-$/.test(input.textContent)) {
+    console.log('minus-b');
+  }
+  else if (/\=/.test(input.textContent)) {
+    console.log('minus-c')
     input.textContent = output.textContent;
     input.textContent += this.textContent;
     output.textContent = this.textContent;
   }
   else if (/[\+\-]$/.test(input.textContent)) {
-    console.log('1');
+    console.log('minus-d')
     input.textContent = input.textContent.slice(0, -1);
     input.textContent += this.textContent;
     output.textContent = this.textContent;
   }
   else if (/[\/\*]$/.test(input.textContent)) {
-    console.log('2');
+    console.log('minus-e')
     input.textContent += this.textContent;
     output.textContent = this.textContent;
   }
   else if (/\.$/.test(output.textContent)) {
-    console.log('3');
+    console.log('minus-f')
     input.textContent = input.textContent.slice(0, -1);
     input.textContent += this.textContent;
     output.textContent = this.textContent;
   }
   else if (input.textContent == '' && this.textContent != '-') {
-    console.log('4');
+    console.log('minus-g')
   }
   //This appends this operator to input and output.
   else {
-    console.log('5');
+    console.log('minus-h')
     input.textContent += this.textContent;
     output.textContent = this.textContent;
   }
@@ -186,17 +229,40 @@ divide.addEventListener('click', inputOperator);
 
 
 function calculate() {
-  if(/[\+-\/\*\.]$/.test(input.textContent)) {
+  if(/[\+-\/\*\.]$/.test(input.textContent) && input.textContent.length > 22 || /e/.test(input.textContent)) {
     input.textContent = input.textContent.slice(0, -1);
+    let e = eval(input.textContent);
+    console.log('v');
+    input.textContent = '= ' + eval(input.textContent);
+    output.textContent = e;
   }
-  output.textContent = eval(input.textContent);
-  input.textContent += '=' + eval(input.textContent);
+  else if(/[\+-\/\*\.]$/.test(input.textContent)) {
+    console.log('w');
+    input.textContent = input.textContent.slice(0, -1);
+    output.textContent = eval(input.textContent);
+    input.textContent = '=' + eval(input.textContent);
+  }
+  else if (input.textContent.length > 22 || /e/.test(input.textContent)) {
+    let e = eval(input.textContent);
+    console.log('x');
+    input.textContent = '= ' + eval(input.textContent);
+    output.textContent = e;
+  }
+  else if (input.textContent == '') {
+    console.log('y');
+  }
+  else {
+    console.log('z');
+    output.textContent = eval(input.textContent);
+    input.textContent = '=' + eval(input.textContent);
+  }
 }
 
 equals.addEventListener('click', calculate);
 
+//"last" problem: try getting an "e" answer and multiplying by a number then pressing equals
 
-//REVISIT FUNCTIONS, ADD NUMBER LIMIT, ADDRESS BIG NUMBERS IN INPUT, ADD STYLING
+//SOLVE LAST PROBLEM, SEARCH FOR OTHER PROBLEMS, REVISIT FUNCTIONS, AND ADD STYLING
 
 //NOTE: AS OF 2/26 TESTS ARE FAILING DUE TO FCC EXPECTING MY "OUTPUT" ELEMENT TO BE NAMED DISPLAY. A QUICK FIX WAS TO CHANGE OUTPUT TO DISPLAY AND DISPLAY TO "SCREEN"
 //WITHIN MY CODEPEN CODE BUT I'M NOT YET SURE IF THAT WILL BE MY PREFERRED SOLUTION
