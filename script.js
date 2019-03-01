@@ -1,3 +1,85 @@
+/*
+function inputNumber() {
+  //THE LOGIC FOR THIS FUNCTION LOOKS FUNKY. I THINK I CAN CLEAN IT UP. IT ALSO MAY BE A GOOD IDEA TO SEPERATE THE ZERO BUTTON'S LOGIC FROM THE 1-9 LOGIC.
+  if (output.textContent.length > 20) {
+    console.log('number:1');
+    output.textContent = 'DIGIT LIMIT MET';
+  }
+  else if (input.textContent.length > 29) {
+    console.log('number:2');
+    output.textContent = 'SCREEN LIMIT MET';
+  }
+  else if (output.textContent == 'DIGIT LIMIT MET') {
+    console.log('number:3');
+  }
+  else if (/\=/.test(input.textContent)) {
+    console.log('number:4');
+    input.textContent = this.textContent;
+    output.textContent = this.textContent;
+  }
+  else if(/\./.test(output.textContent) && this.textContent == '.') {
+    console.log('number:5');
+  }
+  else if (/(?<![0-9])0$/.test(input.textContent) && this.textContent == '.' && output.textContent == '0') {
+    input.textContent += this.textContent;
+    output.textContent += this.textContent;
+    console.log('number:6');
+  }
+  else if (/(?<![0-9])0$/.test(input.textContent) && this.textContent == '.') {
+    input.textContent = input.textContent.slice(0, -1);
+    output.textContent = output.textContent.slice(0, -1);
+    output.textContent += this.textContent;
+    input.textContent += this.textContent;
+    console.log('number:7');
+  }
+  else if (/(?<![0-9])0$/.test(input.textContent) && output.textContent == '0') {
+    input.textContent = input.textContent.slice(0, -1);
+    output.textContent = output.textContent.slice(0, -1);
+    input.textContent += this.textContent;
+    output.textContent += this.textContent;
+    console.log('number:8');
+  }
+  //This if checks is output is 0 and this's textcontent is 0 then does nothing else but sets or "leaves" output 0.
+  else if (output.textContent == '0' && this.textContent == '0') {
+    output.textContent = '0';
+    console.log('number:9');
+  }
+  else if (output.textContent == '0' && this.textContent =='.' && input.textContent == '') {
+    output.textContent = '0.';
+    input.textContent += '0.';
+    console.log('number:10');
+  }
+  else if (output.textContent == '0' && this.textContent == '.') {
+    output.textContent = '0.';
+    input.textContent += this.textContent;
+    console.log('number:11');
+  }
+  //This effectively checks if output is 0 and this's textContent is 1-9 then sets output to nothing before appending this.textContent to output and input.
+  else if (output.textContent == '0') {
+    output.textContent = output.textContent.slice(1);
+    output.textContent += this.textContent;
+    input.textContent += this.textContent;
+    console.log('number:12');
+  }
+  else if(isNaN(output.textContent) && this.textContent == '.') {
+    output.textContent = '0.';
+    input.textContent += '0.';
+    console.log('number:13');
+  }
+  //This checks if output is NaN(which it would be after an operator is clicked) then sets output to this and appends this to input.
+  else if(isNaN(output.textContent)) {
+    output.textContent = this.textContent;
+    input.textContent += this.textContent;
+    console.log('number:14');
+  }
+  else {
+    console.log('number:15');
+    output.textContent += this.textContent;
+    input.textContent += this.textContent;
+  }
+}
+*/
+
 const input = document.getElementById('input');
 const output = document.getElementById('output');
 
@@ -30,87 +112,84 @@ function clearDisplay() {
 }
 
 clear.addEventListener('click', clearDisplay);
+clearDisplay();
+
+//try inputing -'s alternating with numbers including zeros(minor)
+//try 9 * 9 - 9(minor)
 
 function inputNumber() {
-  //THE LOGIC FOR THIS FUNCTION LOOKS FUNKY. I THINK I CAN CLEAN IT UP. IT ALSO MAY BE A GOOD IDEA TO SEPERATE THE ZERO BUTTON'S LOGIC FROM THE 1-9 LOGIC.
-  if (output.textContent.length > 20) { //working at 8
-    console.log('a');
-    console.log(output.textContent);
-    console.log(output.textContent.length);
+  if (output.textContent.length > 20) {
+    console.log('number:1');
     output.textContent = 'DIGIT LIMIT MET';
   }
-  else if (input.textContent.length > 29) { //working at 17
-    console.log('b');
+  else if (input.textContent.length > 29) {
+    console.log('number:2');
     output.textContent = 'SCREEN LIMIT MET';
   }
-  else if (output.textContent == 'DIGIT LIMIT MET') {
-    console.log('c');
-  }
   else if (/\=/.test(input.textContent)) {
-    console.log('-1');
+    console.log('number:4');
     input.textContent = this.textContent;
     output.textContent = this.textContent;
   }
-  else if(/\./.test(output.textContent) && this.textContent == '.') {
-    console.log('0');
-  }
-  else if (/(?<![0-9])0$/.test(input.textContent) == true && this.textContent == '.' && output.textContent == '0') {
-    input.textContent += this.textContent;
-    output.textContent += this.textContent;
-    console.log('1');
-  }
-  else if (/(?<![0-9])0$/.test(input.textContent) == true && this.textContent == '.') {
+  else if (/(?<![0-9\.])0$/.test(input.textContent)) {
     input.textContent = input.textContent.slice(0, -1);
-    output.textContent = output.textContent.slice(0, -1);
-    output.textContent += this.textContent;
-    input.textContent += this.textContent;
-    console.log('2');
-  }
-  else if (/(?<![0-9])0$/.test(input.textContent) == true && output.textContent == '0') {
-    input.textContent = input.textContent.slice(0, -1);
-    output.textContent = output.textContent.slice(0, -1);
-    input.textContent += this.textContent;
-    output.textContent += this.textContent;
-    console.log('3');
-  }
-  //This if checks is output is 0 and this's textcontent is 0 then does nothing else but sets or "leaves" output 0.
-  else if (output.textContent == '0' && this.textContent == '0') {
-    output.textContent = '0';
-    console.log('4');
-  }
-  else if (output.textContent == '0' && this.textContent =='.' && input.textContent == '') {
-    output.textContent = '0.';
-    input.textContent += '0.';
-    console.log('5');
-  }
-  else if (output.textContent == '0' && this.textContent == '.') {
-    output.textContent = '0.';
-    input.textContent += this.textContent;
-    console.log('6');
-  }
-  //This effectively checks if output is 0 and this's textContent is 1-9 then sets output to nothing before appending this.textContent to output and input.
-  else if (output.textContent == '0') {
-    output.textContent = '';
-    output.textContent += this.textContent;
-    input.textContent += this.textContent;
-    console.log('7');
-  }
-  else if(isNaN(output.textContent) && this.textContent == '.') {
-    output.textContent = '0.';
-    input.textContent += '0.';
-    console.log('8');
-  }
-  //This checks if output is NaN(which it would be after an operator is clicked) then sets output to this and appends this to input.
-  else if(isNaN(output.textContent)) {
     output.textContent = this.textContent;
     input.textContent += this.textContent;
-    console.log('9');
+    console.log('number:8');
   }
-  //This appends this to output and input
-  else {
+  else if (!input.textContent && this.textContent == '0' || output.textContent == 'DIGIT LIMIT MET') {
+    console.log('number:9');
+  }
+  else if(output.textContent == '-') {
     output.textContent += this.textContent;
     input.textContent += this.textContent;
-    console.log('10');
+    console.log('number:12');
+  }
+  else if (!input.textContent || /[\+\/\*]/.test(output.textContent)) {
+    output.textContent = this.textContent;
+    input.textContent += this.textContent;
+    console.log('number:13');
+  }
+  else {
+    console.log('number:15');
+    output.textContent += this.textContent;
+    input.textContent += this.textContent;
+  }
+}
+
+function inputDecimal() {
+  if (output.textContent.length > 20) {
+    console.log('number:1a');
+    output.textContent = 'DIGIT LIMIT MET';
+  }
+  else if (input.textContent.length > 29) {
+    console.log('number:2a');
+    output.textContent = 'SCREEN LIMIT MET';
+  }
+  else if (/\=/.test(input.textContent)) {
+    console.log('number:4a');
+    output.textContent = '0.';
+    input.textContent = '0.';
+  }
+  else if (/(?<![0-9])0$/.test(input.textContent)) {
+    input.textContent += this.textContent;
+    output.textContent += this.textContent;
+    console.log('number:6a');
+  }
+  else if (!input.textContent || /[\+\/\*]/.test(output.textContent)) {
+    console.log('number:10a');
+    output.textContent = '0.';
+    input.textContent += '0.';
+  }
+  else if(output.textContent == '-') {
+    console.log('number:13a');
+    output.textContent += '0.';
+    input.textContent += '0.';
+  }
+  else if(output.textContent != 'DIGIT LIMIT MET' && !/\./.test(output.textContent)){
+    console.log('number:15a');
+    output.textContent += this.textContent;
+    input.textContent += this.textContent;
   }
 }
 
@@ -125,98 +204,66 @@ seven.addEventListener('click', inputNumber);
 eight.addEventListener('click', inputNumber);
 nine.addEventListener('click', inputNumber);
 
-decimal.addEventListener('click', inputNumber);
+decimal.addEventListener('click', inputDecimal);
+
 
 function inputOperator() {
-  if (/\=/.test(input.textContent) && !/[0-9]$/.test(input.textContent)) {
-    console.log('-4');
-    input.textContent = input.textContent.slice(1, -1);
-    input.textContent += this.textContent;
-    output.textContent = this.textContent;
-  }
-  else if (/\=/.test(input.textContent) && /T/.test(output.textContent)) {
-    console.log('-3')
+  //This is a function that dictates what happens when an operator(+, *, /) is input. This code looks clean and consise as of 2/28/19.
+  //All of these if statements check an expression before eventually adding the operator to the input and setting the output to the operator.
+  
+  //checks if there is an "=" then slices it off(the front) effectively operating on the solution of the last equation.
+  if (/\=/.test(input.textContent)) {
+    console.log('operator:1');
     input.textContent = input.textContent.slice(1);
     input.textContent += this.textContent;
     output.textContent = this.textContent;
   }
-  else if (/\=/.test(input.textContent)) {
-    console.log('-2');
-    input.textContent = output.textContent;
-    input.textContent += this.textContent;
-    output.textContent = this.textContent;
-  }
   else if (input.textContent == '-') {
-    console.log('-1');
+    console.log('operator:2');
   }
+  //checks if a "-" is the last character and is preceded by a non-number then slices both characters off(the back).
   else if (/(?<![0-9])-$/.test(input.textContent)) {
-    console.log('0');
+    console.log('operator:3');
     input.textContent = input.textContent.slice(0, -2);
     input.textContent += this.textContent;
     output.textContent = this.textContent;
   }
-  else if (/[\+\-\/\*]$/.test(input.textContent)) {
-    console.log('1');
+  //checks if the last character is not a number(+, -, *, ?, .) then slices it off(the back).
+  else if (/[^0-9]$/.test(input.textContent)) {
+    console.log('operator:4');
     input.textContent = input.textContent.slice(0, -1);
     input.textContent += this.textContent;
     output.textContent = this.textContent;
   }
-  else if (/\.$/.test(output.textContent)) {
-    console.log('2');
-    input.textContent = input.textContent.slice(0, -1);
-    input.textContent += this.textContent;
-    output.textContent = this.textContent;
-  }
-  else if (input.textContent == '' && this.textContent != '-') {
-    console.log('3');
-  }
-  else {
-    console.log('5');
+  //checks if input is ''.
+  else if (input.textContent != '') {
+    console.log('operator:5');
     input.textContent += this.textContent;
     output.textContent = this.textContent;
   }
 }
 
 function inputMinus() {
-  //IT MAY BE BETTER TO INCORPORATE THIS LOGIC INTO THE INPUTOPERATOR FUNCTION.
-  if (/\=/.test(input.textContent) && /T/.test(output.textContent)) {
-    console.log('minus-a')
+  //This is a function that dictates what happens when an subtract operator(-) is input. This code looks clean and consise as of 2/28/19.
+  //All of these statements eventually add the operator to the input and set the output to the operator.
+
+  //checks if there is an "=" then slices it off(the front) effectively operating on the solution of the last equation.  
+  if (/\=/.test(input.textContent)) {
+    console.log('minus:1')
     input.textContent = input.textContent.slice(1);
     input.textContent += this.textContent;
     output.textContent = this.textContent;
   }
-  else if (/\=/.test(input.textContent) && /\-$/.test(input.textContent)) {
-    console.log('minus-b');
-  }
-  else if (/\=/.test(input.textContent)) {
-    console.log('minus-c')
-    input.textContent = output.textContent;
-    input.textContent += this.textContent;
-    output.textContent = this.textContent;
-  }
-  else if (/[\+\-]$/.test(input.textContent)) {
-    console.log('minus-d')
+  //checks if the last character is +, -, or . then slices that character off(the end).
+  else if (/[\+\-\.]$/.test(input.textContent)) {
+    console.log('minus:2')
     input.textContent = input.textContent.slice(0, -1);
     input.textContent += this.textContent;
     output.textContent = this.textContent;
   }
-  else if (/[\/\*]$/.test(input.textContent)) {
-    console.log('minus-e')
-    input.textContent += this.textContent;
-    output.textContent = this.textContent;
-  }
-  else if (/\.$/.test(output.textContent)) {
-    console.log('minus-f')
-    input.textContent = input.textContent.slice(0, -1);
-    input.textContent += this.textContent;
-    output.textContent = this.textContent;
-  }
-  else if (input.textContent == '' && this.textContent != '-') {
-    console.log('minus-g')
-  }
-  //This appends this operator to input and output.
+  //all other possible cases(number, *, or / is last character)
   else {
-    console.log('minus-h')
+    console.log('minus:3')
     input.textContent += this.textContent;
     output.textContent = this.textContent;
   }
@@ -229,40 +276,41 @@ divide.addEventListener('click', inputOperator);
 
 
 function calculate() {
-  if(/[\+-\/\*\.]$/.test(input.textContent) && input.textContent.length > 22 || /e/.test(input.textContent)) {
-    input.textContent = input.textContent.slice(0, -1);
-    let e = eval(input.textContent);
-    console.log('v');
-    input.textContent = '= ' + eval(input.textContent);
-    output.textContent = e;
+  //This is a function that dictates what happens when an equals operator(=) is input. This code looks clean and consise as of 2/28/19.
+  //All of these statements eventually either call clearDisplay() or set input and output to eval(input.textContent).
+
+  //checks if input is '-', '', or contains a = then calls clearDisplay()
+  if (/=/.test(input.textContent) || input.textContent == '-' || input.textContent == '') {
+    console.log('calculate:1');
+    clearDisplay();
   }
-  else if(/[\+-\/\*\.]$/.test(input.textContent)) {
-    console.log('w');
+  //checks if input ends with a - that is preceded by a non-number then slices both characters off(the end).
+  else if(/(?<![0-9])-$/.test(input.textContent)) {
+    console.log('calculate:2');
+    input.textContent = input.textContent.slice(0, -2);
+    output.textContent = eval(input.textContent);
+    input.textContent = '= ' + eval(input.textContent);
+  }
+  //checks if the last character of input is a non-number then slices that character off(the end).
+  else if(/[^0-9]$/.test(input.textContent)) {
+    console.log('calculate:3');
     input.textContent = input.textContent.slice(0, -1);
     output.textContent = eval(input.textContent);
     input.textContent = '=' + eval(input.textContent);
   }
-  else if (input.textContent.length > 22 || /e/.test(input.textContent)) {
-    let e = eval(input.textContent);
-    console.log('x');
-    input.textContent = '= ' + eval(input.textContent);
-    output.textContent = e;
-  }
-  else if (input.textContent == '') {
-    console.log('y');
-  }
   else {
-    console.log('z');
+    console.log('calculate:4');
     output.textContent = eval(input.textContent);
     input.textContent = '=' + eval(input.textContent);
   }
 }
 
 equals.addEventListener('click', calculate);
+ 
 
-//"last" problem: try getting an "e" answer and multiplying by a number then pressing equals
-
-//SOLVE LAST PROBLEM, SEARCH FOR OTHER PROBLEMS, REVISIT FUNCTIONS, AND ADD STYLING
+//FINISH REFACTORING FUNCTIONS AND ADD STYLING
 
 //NOTE: AS OF 2/26 TESTS ARE FAILING DUE TO FCC EXPECTING MY "OUTPUT" ELEMENT TO BE NAMED DISPLAY. A QUICK FIX WAS TO CHANGE OUTPUT TO DISPLAY AND DISPLAY TO "SCREEN"
 //WITHIN MY CODEPEN CODE BUT I'M NOT YET SURE IF THAT WILL BE MY PREFERRED SOLUTION
+
+//FEATURE: WHENEVER A/MOST BUTTONS ARE PRESSED AND NOTHING HAPPENS THE BUTTON FLASHES RED
