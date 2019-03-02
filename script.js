@@ -78,46 +78,10 @@ function inputNumber() {
     input.textContent += this.textContent;
   }
 }
-*/
-
-const input = document.getElementById('input');
-const output = document.getElementById('output');
-
-const clear = document.getElementById('clear');
-
-const zero = document.getElementById('zero');
-const one = document.getElementById('one');
-const two = document.getElementById('two');
-const three = document.getElementById('three');
-const four = document.getElementById('four');
-const five = document.getElementById('five');
-const six = document.getElementById('six');
-const seven = document.getElementById('seven');
-const eight = document.getElementById('eight');
-const nine = document.getElementById('nine');
-
-const add = document.getElementById('add');
-const subtract = document.getElementById('subtract');
-const multiply = document.getElementById('multiply');
-const divide = document.getElementById('divide');
-
-const decimal = document.getElementById('decimal');
-const equals = document.getElementById('equals');
-
-
-function clearDisplay() {
-  input.textContent = '';
-  output.textContent = '0';
-
-}
-
-clear.addEventListener('click', clearDisplay);
-clearDisplay();
-
-//try inputing -'s alternating with numbers including zeros(minor)
-//try 9 * 9 - 9(minor)
 
 function inputNumber() {
+  //This is a function that dictates what happens when a number(0-9) is input.
+
   if (output.textContent.length > 20) {
     console.log('number:1');
     output.textContent = 'DIGIT LIMIT MET';
@@ -128,71 +92,140 @@ function inputNumber() {
   }
   else if (/\=/.test(input.textContent)) {
     console.log('number:4');
-    input.textContent = this.textContent;
     output.textContent = this.textContent;
+    input.textContent = this.textContent;
   }
-  else if (/(?<![0-9\.])0$/.test(input.textContent)) {
+  //checks if input ends with a 0 and is preceded by a '+', '-', '*', '/', or '.'(+0, -0, /0, *0).
+  else if (/(?<=[\+\-\/\*])0$/.test(input.textContent)) {
     input.textContent = input.textContent.slice(0, -1);
     output.textContent = this.textContent;
     input.textContent += this.textContent;
     console.log('number:8');
   }
-  else if (!input.textContent && this.textContent == '0' || output.textContent == 'DIGIT LIMIT MET') {
+  //checks if input is empty and this is '0'.
+  else if (!input.textContent && this.textContent == '0') {
     console.log('number:9');
   }
-  else if(output.textContent == '-') {
-    output.textContent += this.textContent;
-    input.textContent += this.textContent;
-    console.log('number:12');
-  }
-  else if (!input.textContent || /[\+\/\*]/.test(output.textContent)) {
+  //checks if input is empty OR ends with a '+', '*', or '/' OR ends with a '-' that is preceded by a number.
+  else if (/^$|[\+\*\/]$|(?<=[0-9]-$)/.test(input.textContent)) {
     output.textContent = this.textContent;
     input.textContent += this.textContent;
     console.log('number:13');
   }
-  else {
+  else if(!/T/.test(output.textContent)) {
     console.log('number:15');
     output.textContent += this.textContent;
     input.textContent += this.textContent;
   }
 }
 
-function inputDecimal() {
-  if (output.textContent.length > 20) {
-    console.log('number:1a');
-    output.textContent = 'DIGIT LIMIT MET';
-  }
-  else if (input.textContent.length > 29) {
-    console.log('number:2a');
-    output.textContent = 'SCREEN LIMIT MET';
-  }
-  else if (/\=/.test(input.textContent)) {
-    console.log('number:4a');
-    output.textContent = '0.';
-    input.textContent = '0.';
-  }
-  else if (/(?<![0-9])0$/.test(input.textContent)) {
+function inputOperator() {
+  //This is a function that dictates what happens when an operator(+, *, /) is input.
+  
+  if (/\=/.test(input.textContent)) {
+    console.log('operator:1');
+    input.textContent = input.textContent.slice(1);
     input.textContent += this.textContent;
-    output.textContent += this.textContent;
-    console.log('number:6a');
+    output.textContent = this.textContent;
   }
-  else if (!input.textContent || /[\+\/\*]/.test(output.textContent)) {
-    console.log('number:10a');
-    output.textContent = '0.';
-    input.textContent += '0.';
-  }
-  else if(output.textContent == '-') {
-    console.log('number:13a');
-    output.textContent += '0.';
-    input.textContent += '0.';
-  }
-  else if(output.textContent != 'DIGIT LIMIT MET' && !/\./.test(output.textContent)){
-    console.log('number:15a');
-    output.textContent += this.textContent;
+  //checks if input ends with a - and is preceded by a '*' or '/'.
+  else if (/(?<=[\*\/])-$/.test(input.textContent)) {
+    console.log('operator:3');
+    input.textContent = input.textContent.slice(0, -2);
     input.textContent += this.textContent;
+    output.textContent = this.textContent;
+  }
+  //checks if the last character of input is a '+', '*', '/', or '.' OR if the last character of input is a '-' preceded by any character.
+  else if (/[\+\*\/\.]$|(?<=.)-$/.test(input.textContent)) {
+    console.log('operator:4');
+    input.textContent = input.textContent.slice(0, -1);
+    input.textContent += this.textContent;
+    output.textContent = this.textContent;
+  }
+  else if (!/^$|^-$/.test(input.textContent)) {
+    console.log('operator:5');
+    input.textContent += this.textContent;
+    output.textContent = this.textContent;
   }
 }
 
+
+function inputMinus() {
+  //This is a function that dictates what happens when an subtract operator(-) is input.
+
+  if (/\=/.test(input.textContent)) {
+    console.log('minus:1')
+    input.textContent = input.textContent.slice(1);
+    input.textContent += this.textContent;
+    output.textContent = this.textContent;
+  }
+  //checks if input ends with a '+', '-', or '.'.
+  else if (/[\+\-\.]$/.test(input.textContent)) {
+    console.log('minus:2')
+    input.textContent = input.textContent.slice(0, -1);
+    input.textContent += this.textContent;
+    output.textContent = this.textContent;
+  }
+  else {
+    console.log('minus:3')
+    input.textContent += this.textContent;
+    output.textContent = this.textContent;
+  }
+}
+
+
+function calculate() {
+  //This is a function that dictates what happens when an equals operator(=) is input.
+
+  //checks if input ends with a '-' that is preceded by a '+', '*', '/', or '.'.
+  if(/(?<=[\+\*\/\.])-$/.test(input.textContent)) {
+    console.log('calculate:2');
+    input.textContent = input.textContent.slice(0, -2);
+    output.textContent = eval(input.textContent);
+    input.textContent = '=' + eval(input.textContent);
+  }
+  //checks if the last character of input is a '+', '*', '/', or '.' OR if the last character of input is a '-' preceded by any character.
+  else if(/[\+\*\/\.]$|(?<=.)-$/.test(input.textContent)) {
+    console.log('calculate:3');
+    input.textContent = input.textContent.slice(0, -1);
+    output.textContent = eval(input.textContent);
+    input.textContent = '=' + eval(input.textContent);
+  }
+  //checks if input is empty OR is '-' OR contains a '='.
+  else if(!/=|^-$|^$/.test(input.textContent)) {
+    console.log('calculate:4');
+    output.textContent = eval(input.textContent);
+    input.textContent = '=' + eval(input.textContent);
+  }
+}
+
+
+*/
+
+//Setting variables
+const input = document.getElementById('input');
+const output = document.getElementById('output');
+const clear = document.getElementById('clear');
+const zero = document.getElementById('zero');
+const one = document.getElementById('one');
+const two = document.getElementById('two');
+const three = document.getElementById('three');
+const four = document.getElementById('four');
+const five = document.getElementById('five');
+const six = document.getElementById('six');
+const seven = document.getElementById('seven');
+const eight = document.getElementById('eight');
+const nine = document.getElementById('nine');
+const add = document.getElementById('add');
+const subtract = document.getElementById('subtract');
+const multiply = document.getElementById('multiply');
+const divide = document.getElementById('divide');
+const decimal = document.getElementById('decimal');
+const equals = document.getElementById('equals');
+
+
+//Adding event listeners
+clear.addEventListener('click', clearDisplay);
 zero.addEventListener('click', inputNumber);
 one.addEventListener('click', inputNumber);
 two.addEventListener('click', inputNumber);
@@ -203,40 +236,112 @@ six.addEventListener('click', inputNumber);
 seven.addEventListener('click', inputNumber);
 eight.addEventListener('click', inputNumber);
 nine.addEventListener('click', inputNumber);
-
 decimal.addEventListener('click', inputDecimal);
+add.addEventListener('click', inputOperator);
+subtract.addEventListener('click', inputMinus);
+multiply.addEventListener('click', inputOperator);
+divide.addEventListener('click', inputOperator);
+equals.addEventListener('click', calculate);
 
+
+//Initialize
+clearDisplay();
+
+//Functions
+
+function clearDisplay() {
+  input.textContent = '';
+  output.textContent = '0';
+}
+
+function inputNumber() {
+  //This is a function that dictates what happens when a number(0-9) is input.
+
+  if (output.textContent.length > 20) {
+    console.log('number:1');
+    output.textContent = 'DIGIT LIMIT MET';
+  }
+  else if (input.textContent.length > 29) {
+    console.log('number:2');
+    output.textContent = 'SCREEN LIMIT MET';
+  }
+  else if (!input.textContent && this.textContent == '0') {//can I eliminate this "stopper"?
+    console.log('number:9');
+  }
+  else { //this can be unnested
+    if (/\=/.test(input.textContent)) {
+      console.log('number:4');
+      input.textContent = '';
+      output.textContent = '';
+    }
+    //checks if input ends with a 0 that is preceded by a '+', '-', '*', '/', or '.'(+0, -0, /0, *0).
+    else if (/(?<=[\+\-\/\*])0$/.test(input.textContent)) {
+      console.log('number:8');
+      input.textContent = input.textContent.slice(0, -1);
+      output.textContent = '';
+    }
+    //checks if input is empty OR ends with a '+', '*', or '/' OR ends with a '-' that is preceded by a number.
+    else if (/^$|[\+\*\/]$|(?<=[0-9]-$)/.test(input.textContent)) {
+      console.log('number:13');
+      output.textContent = '';
+    }
+    if(!/T/.test(output.textContent)) {
+      console.log('number:15');
+      output.textContent += this.textContent;
+      input.textContent += this.textContent;
+    }
+  }
+}
+
+function inputDecimal() {
+  //This is a function that dictates what happens when a decimal(.) is input.
+
+  if (input.textContent.length > 29) {
+    console.log('number:2a');
+    output.textContent = 'SCREEN LIMIT MET';
+  }
+  else if (/\=|^$/.test(input.textContent)) {
+    console.log('number:4a');
+    input.textContent = '0.';
+    output.textContent = '0.';
+  }
+  else if(/^-$|(?<=[\*\/])-$/.test(input.textContent)) {
+    console.log('number:14a');
+    input.textContent += '0.';
+    output.textContent += '0.';
+  }
+  //checks if input is empty or output is '+', '*', or '/'.
+  else if (/[\+\-\*\/]$/.test(input.textContent)) {
+    console.log('number:13a');
+    input.textContent += '0.';
+    output.textContent = '0.';
+  }
+  //checks if output contains a '.' or 'T'(for "DIGIT LIMIT MET").
+  else if(!/\.|T/.test(output.textContent)){
+    console.log('number:15a');
+    input.textContent += this.textContent;
+    output.textContent += this.textContent;
+  }
+}
 
 function inputOperator() {
-  //This is a function that dictates what happens when an operator(+, *, /) is input. This code looks clean and consise as of 2/28/19.
-  //All of these if statements check an expression before eventually adding the operator to the input and setting the output to the operator.
+  //This is a function that dictates what happens when an operator(+, *, /) is input.
   
-  //checks if there is an "=" then slices it off(the front) effectively operating on the solution of the last equation.
   if (/\=/.test(input.textContent)) {
     console.log('operator:1');
     input.textContent = input.textContent.slice(1);
-    input.textContent += this.textContent;
-    output.textContent = this.textContent;
   }
-  else if (input.textContent == '-') {
-    console.log('operator:2');
-  }
-  //checks if a "-" is the last character and is preceded by a non-number then slices both characters off(the back).
-  else if (/(?<![0-9])-$/.test(input.textContent)) {
+  //checks if input ends with a - and is preceded by a '*' or '/'.
+  else if (/(?<=[\*\/])-$/.test(input.textContent)) {
     console.log('operator:3');
     input.textContent = input.textContent.slice(0, -2);
-    input.textContent += this.textContent;
-    output.textContent = this.textContent;
   }
-  //checks if the last character is not a number(+, -, *, ?, .) then slices it off(the back).
-  else if (/[^0-9]$/.test(input.textContent)) {
+  //checks if the last character of input is a '+', '*', '/', or '.' OR if the last character of input is a '-' preceded by any character.
+  else if (/[\+\*\/\.]$|(?<=.)-$/.test(input.textContent)) {
     console.log('operator:4');
     input.textContent = input.textContent.slice(0, -1);
-    input.textContent += this.textContent;
-    output.textContent = this.textContent;
   }
-  //checks if input is ''.
-  else if (input.textContent != '') {
+  if (!/^$|^-$/.test(input.textContent)) {
     console.log('operator:5');
     input.textContent += this.textContent;
     output.textContent = this.textContent;
@@ -244,71 +349,48 @@ function inputOperator() {
 }
 
 function inputMinus() {
-  //This is a function that dictates what happens when an subtract operator(-) is input. This code looks clean and consise as of 2/28/19.
-  //All of these statements eventually add the operator to the input and set the output to the operator.
+  //This is a function that dictates what happens when an subtract operator(-) is input.
 
-  //checks if there is an "=" then slices it off(the front) effectively operating on the solution of the last equation.  
   if (/\=/.test(input.textContent)) {
     console.log('minus:1')
     input.textContent = input.textContent.slice(1);
-    input.textContent += this.textContent;
-    output.textContent = this.textContent;
   }
-  //checks if the last character is +, -, or . then slices that character off(the end).
+  //checks if input ends with a '+', '-', or '.'.
   else if (/[\+\-\.]$/.test(input.textContent)) {
     console.log('minus:2')
     input.textContent = input.textContent.slice(0, -1);
-    input.textContent += this.textContent;
-    output.textContent = this.textContent;
   }
-  //all other possible cases(number, *, or / is last character)
-  else {
-    console.log('minus:3')
-    input.textContent += this.textContent;
-    output.textContent = this.textContent;
-  }
+  console.log('minus:3')
+  input.textContent += this.textContent;
+  output.textContent = this.textContent;
 }
-
-add.addEventListener('click', inputOperator);
-subtract.addEventListener('click', inputMinus);
-multiply.addEventListener('click', inputOperator);
-divide.addEventListener('click', inputOperator);
-
 
 function calculate() {
-  //This is a function that dictates what happens when an equals operator(=) is input. This code looks clean and consise as of 2/28/19.
-  //All of these statements eventually either call clearDisplay() or set input and output to eval(input.textContent).
+  //This is a function that dictates what happens when an equals operator(=) is input.
 
-  //checks if input is '-', '', or contains a = then calls clearDisplay()
-  if (/=/.test(input.textContent) || input.textContent == '-' || input.textContent == '') {
+  //checks if input ends with a '-' that is preceded by a '+', '*', '/', or '.'.
+  if(/(?<=[\+\*\/\.])-$/.test(input.textContent)) {
     console.log('calculate:1');
-    clearDisplay();
-  }
-  //checks if input ends with a - that is preceded by a non-number then slices both characters off(the end).
-  else if(/(?<![0-9])-$/.test(input.textContent)) {
-    console.log('calculate:2');
     input.textContent = input.textContent.slice(0, -2);
-    output.textContent = eval(input.textContent);
-    input.textContent = '= ' + eval(input.textContent);
   }
-  //checks if the last character of input is a non-number then slices that character off(the end).
-  else if(/[^0-9]$/.test(input.textContent)) {
-    console.log('calculate:3');
+  //checks if the last character of input is a '+', '*', '/', or '.' OR if the last character of input is a '-' preceded by any character.
+  else if(/[\+\*\/\.]$|(?<=.)-$/.test(input.textContent)) {
+    console.log('calculate:2');
     input.textContent = input.textContent.slice(0, -1);
-    output.textContent = eval(input.textContent);
-    input.textContent = '=' + eval(input.textContent);
   }
-  else {
-    console.log('calculate:4');
+  //checks if input is empty OR is '-' OR contains a '='.
+  if(!/=|^-$|^$/.test(input.textContent)) {
+    console.log('calculate:3');
     output.textContent = eval(input.textContent);
     input.textContent = '=' + eval(input.textContent);
   }
 }
 
-equals.addEventListener('click', calculate);
  
 
-//FINISH REFACTORING FUNCTIONS AND ADD STYLING
+//FINISH STYLING
+
+//REVISIT INPUTNUMBER FUNCTION PERIODICALLY FOR POSSIBLE REFACTORING
 
 //NOTE: AS OF 2/26 TESTS ARE FAILING DUE TO FCC EXPECTING MY "OUTPUT" ELEMENT TO BE NAMED DISPLAY. A QUICK FIX WAS TO CHANGE OUTPUT TO DISPLAY AND DISPLAY TO "SCREEN"
 //WITHIN MY CODEPEN CODE BUT I'M NOT YET SURE IF THAT WILL BE MY PREFERRED SOLUTION

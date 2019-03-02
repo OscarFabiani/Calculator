@@ -3,7 +3,7 @@ body {
   margin: auto 0;
   justify-content: center;
   height: 100vh;
-  background-color: aqua;
+  background-color: rgb(143, 188, 206);
 }
 #calculator {
   display: grid;
@@ -16,12 +16,14 @@ body {
   "four five six add"
   "one two three equals"
   "zero zero decimal equals";
-  grid-gap: 1px;
+  grid-gap: 5px;
   margin: auto 0;
   height: 400px;
   width: 325px;
-  background-color: black;
-  border: 1px solid black;
+  background-color: rgb(0, 0, 0);
+  border: 7px outset rgb(40, 24, 83);
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px black;
 }
 #display {
   display: flex;
@@ -34,8 +36,9 @@ body {
   justify-content: flex-end;
   height: 50%;
   width: 100%;
-  background-color: blue;
+  background-color: rgb(210, 212, 174);
   font-size: 20px;
+  border-radius: 5px 5px 0px 0px;
 }
 #output {
   display: flex;
@@ -43,11 +46,22 @@ body {
   justify-content: flex-end;
   height: 50%;
   width: 100%;
-  background-color: red;
+  background-color: rgb(210, 212, 174);
   font-size: 30px;
+  border-radius: 0px 0px 5px 5px;
+}
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(126, 170, 83);
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px black, -2px -2px 5px black, 3px 3px 5px inset black, 0px 0px 1px inset black;
 }
 #clear {
   grid-area: clear;
+  /*trying to override the box shadow for the clear button to slear the left side shadow for accurate lighting effect*/
+  box-shadow: 2px 2px 5px black, 0px -2px 5px black, 3px 3px 5px inset black, 5px 0px 10px inset black;
 }
 #divide {
   grid-area: divide;
@@ -57,6 +71,7 @@ body {
 }
 #seven {
   grid-area: seven;
+  box-shadow: 2px 2px 5px black, 0px -2px 5px black, 2px 2px 2px inset black, 5px 0px 10px inset black;
 }
 #eight {
   grid-area: eight;
@@ -69,6 +84,7 @@ body {
 }
 #four {
   grid-area: four;
+  box-shadow: 2px 2px 5px black, 0px -2px 5px black, 2px 2px 2px inset black, 5px 0px 10px inset black;
 }
 #five {
   grid-area: five;
@@ -81,6 +97,7 @@ body {
 }
 #one {
   grid-area: one;
+  box-shadow: 2px 2px 5px black, 0px -2px 5px black, 2px 2px 2px inset black, 5px 0px 10px inset black;
 }
 #two {
   grid-area: two;
@@ -93,13 +110,8 @@ body {
 }
 #zero {
   grid-area: zero;
+  box-shadow: 2px 2px 5px black, 0px -2px 5px black, 2px 2px 2px inset black, 5px 0px 10px inset black;
 }
 #decimal {
   grid-area: decimal;
-}
-.button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: chartreuse;
 }
